@@ -63,9 +63,6 @@ function todo-comments --description 'Search for (TODO|FIX|FIXME|BUG|PERF|NOTE|I
             printf "%sERROR%s: rg (%s%s%s) is not found in \$PATH\n" $red $reset (set_color --underline) "https://github.com/BurntSushi/ripgrep" $reset
         end
 
-        printf "\n"
-        printf "Defined in %s%s%s\n" $cyan (status filename) $reset
-
         return 0
     end
 

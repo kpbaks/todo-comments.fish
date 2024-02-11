@@ -1,5 +1,4 @@
 function todo-comments --description 'Search for (TODO|FIX|FIXME|BUG|PERF|NOTE|IDEA) comments in the current directory using rg'
-    # TODO: if --todo is enabled then also search for `todo!()` in rust codebases
     set -l options h/help \
         (fish_opt --short=e --long=extension --multiple-vals) \
         (fish_opt --short=E --long=exclude --multiple-vals) \
@@ -27,7 +26,8 @@ function todo-comments --description 'Search for (TODO|FIX|FIXME|BUG|PERF|NOTE|I
     end
 
     if set --query _flag_help
-        printf "%sSearch for (TODO|FIXME|BUG|PERF|NOTE|IDEA) comments with %srg%s in %s%s%s\n" $bold (set_color $fish_color_command) $reset (set_color --italics --underline) $PWD $reset
+        set -l basename_of_cwd ./(path basename $PWD)
+        printf "%sSearch for (TODO|FIXME|BUG|PERF|NOTE|IDEA) comments with %srg%s in %s%s%s\n" $bold (set_color $fish_color_command) $reset (set_color --italics --underline) $basename_of_cwd $reset
         printf "\n"
         printf "%sUSAGE%s: %s%s%s [OPTIONS]\n" $yellow $reset (set_color $fish_color_command) (status function) $reset
         printf "\n"
@@ -48,14 +48,14 @@ function todo-comments --description 'Search for (TODO|FIX|FIXME|BUG|PERF|NOTE|I
         printf "\n"
         printf "%sEXAMPLES%s:\n" $yellow $reset
         printf "\t"
-        printf "%s --fixme --bug # Search for lines containing (FIX|FIXME|BUG): in %s" (status function) $PWD | fish_indent --ansi
+        printf "%s --fixme --bug # Search for lines containing (FIX|FIXME|BUG): in %s" (status function) $basename_of_cwd | fish_indent --ansi
         printf "\t"
-        printf "%s --extension js,ts --todo # Search for lines containing TODO: in *.js and *.ts files in %s" (status function) $PWD | fish_indent --ansi
+        printf "%s --extension js,ts --todo # Search for lines containing TODO: in *.js and *.ts files in %s" (status function) $basename_of_cwd | fish_indent --ansi
         printf "\t"
-        printf "%s --exclude rs --perf # Search for lines containing PERF: in all files except *.rs files in %s" (status function) $PWD | fish_indent --ansi
+        printf "%s --exclude rs --perf # Search for lines containing PERF: in all files except *.rs files in %s" (status function) $basename_of_cwd | fish_indent --ansi
         if command --query fzf
             printf "\t"
-            printf "%s --fzf --todo # Search for lines containing TODO: in all files in %s and use fzf to select the file and line to open in the editor" (status function) $PWD | fish_indent --ansi
+            printf "%s --fzf --todo # Search for lines containing TODO: in all files in %s and use fzf to select the file and line to open in the editor" (status function) $basename_of_cwd | fish_indent --ansi
         end
 
         if not command --query rg

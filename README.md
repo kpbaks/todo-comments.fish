@@ -7,7 +7,7 @@ List and search for TODO: like comments in the cwd
 
 ### Optional
 
-- [fzf](https://github.com/junegunn/fzf)
+- [fzf](https://github.com/junegunn/fzf) enables the `--fzf` flag, to fuzzy search among the matches and open them in your `$EDITOR`
 
 ## Installation
 
